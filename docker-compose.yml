@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    ports:
+      - 4567-4578:4567-4578
+      - 8080:8080
+    networks:
+      - sam_s3_dynamo
+  dynamodb-local:
+    image: amazon/dynamodb-local
+    container_name: dynamodb
+    build: ./
+    ports:
+      - 8000:8000
+    command: -jar DynamoDBLocal.jar -dbPath /data -sharedDb
+    volumes:
+      - ./data:/data
+    networks:
+      - sam_s3_dynamo
+networks:
+  sam_s3_dynamo:
+    external: true

@@ -1,0 +1,17 @@
+Globals:
+  Function:
+    Runtime: nodejs12.x
+    Handler: app.handler
+    Environment:
+      Variables:
+        IS_LOCAL_STACK: "false"
+Resources:
+  S3ReadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: read_cds/
+      Events:
+        ReadFunction:
+          Type: S3
+          Properties:
+            Path: /read_cds
